@@ -1,49 +1,45 @@
 ﻿@model NoteTakerWebApp.Models.User
 
 @{
-    ViewData["Title"] = "CreateUser";
+    ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if(TempData["sucess"] != null)
-{
-    <h2>@TempData["sucess"]</h2>
-}
 
-<h2>Create User</h2>
+
+<h1>Login</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" asp-action="CreateUser">
+        <form method="post" asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <input type="text" id="Username" asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input type="password"  asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="RePassword" class="control-label">Re-enter Password</label>
-                <input asp-for="RePassword" class="form-control" />
-                <span asp-validation-for="RePassword" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-groupx">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+<br />
+@if (TempData["Fail"] != null)
+{
+    <h2>@TempData["Fail"]</h2>
+}
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -16,6 +16,8 @@ namespace NoteTakerWebApp.Controllers
         {
             _db = db;
         }
+
+        //Lists all users in the DB
         public IActionResult Index()
         {
             //var objUserList = _db.Users.ToList();
@@ -39,11 +41,12 @@ namespace NoteTakerWebApp.Controllers
             {
                 _db.Users.Add(user);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["sucess"] = user.Username + " was created successfully!";
+                //return RedirectToAction("Index");
+                //return RedirectToAction("Index", "Home");
             }
 
-            return View(user);
-            
+            return View(user); 
         }
     }
 }
