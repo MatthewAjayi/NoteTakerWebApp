@@ -1,42 +1,41 @@
 ﻿@model NoteTakerWebApp.Models.Notes
 
 @{
-    ViewData["Title"] = "CreateNewNote";
+    ViewData["Title"] = "EditNotes";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-@if (TempData["sucess"] != null)
-{
-    <h2>@TempData["sucess"]</h2>
-}
-
-<h1>Create New Note</h1>
+<h1>Edit Notes</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateNewNote">
+        <form method="post" asp-controller="ViewNotes" asp-action="EditNotes">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" cols="6" rows="6"></textarea>
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="ViewNotes" asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

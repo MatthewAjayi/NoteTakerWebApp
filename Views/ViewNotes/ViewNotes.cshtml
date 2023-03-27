@@ -14,36 +14,18 @@
 
 <div class="row">
     @foreach (var item in Model) 
-    {
-            @*<tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>*@
-        
-            <div class="col-lg-4">
-                    <div class="card" style="width:400px;margin:10px;">
-                        <div class="card-body">
-                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <p class="card-title">@Html.DisplayFor(modelItem => item.Description)</p>
-                            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                            <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="DeleteNote" asp-route-id="@item.Id">Delete</a>
-                        </div>
-                    </div>
+    {  
+        <div class="col-lg-4">
+            <div class="card" style="width:400px;margin:10px;">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="card-title">@Html.DisplayFor(modelItem => item.Description)</p>
+                    <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="EditNotes" asp-route-id="@item.Id">Edit</a>
+                    @Html.ActionLink("Delete","Delete", new { id=item.Id })
+                    @*<a class="btn btn-primary" asp-controller="ViewNotes" asp-action="Index" asp-route-id="@item.Id">Delete</a>*@
+                </div>
             </div>
-        
+        </div>    
     }
 
 </div>

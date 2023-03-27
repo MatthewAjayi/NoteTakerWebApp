@@ -10,33 +10,52 @@ namespace NoteTakerWebApp.Controllers
         {
             _db = db;
         }
-        public IActionResult ViewNotes()
+        public IActionResult Index()
         {
             IEnumerable<Notes> notes = _db.Notes.ToList();
             notes = _db.Notes.Where(userNotes => userNotes.UserId == UserStatic.UserID);
             return View(notes);
         }
 
-        public IActionResult DeleteNote(int? id)
+        //public IActionResult Delete(int?id)
+        //{
+        //    try
+        //    {
+
+        //        var note = _db.Notes.FirstOrDefault(x => x.Id == id);
+
+        //        if (note == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return PartialView("_DeletePartialView", note);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+
+        //}
+
+        [HttpPost]
+        public IActionResult Delete(int?id)
         {
             try
             {
-                if (id == null)
-                {
-
-                    return NotFound();
-                }
-
                 var note = _db.Notes.FirstOrDefault(x => x.Id == id);
-
                 if (note == null)
                 {
-
                     return NotFound();
                 }
 
-                return View(note);
+                _db.Notes.Remove(note);
+                _db.SaveChanges();
 
+                //return PartialView("_DeletePartialView", note);
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -46,27 +65,58 @@ namespace NoteTakerWebApp.Controllers
 
         }
 
+        //public IActionResult EditNotes(int? id)
+        //{
+        //    try
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        var note = _db.Notes.FirstOrDefault(x => x.Id == id);
+
+        //        if (note == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return RedirectToAction("EditNotes", note);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+
+        //}
+
         //POST
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteListNote(int? id)
+        //[ValidateAntiForgeryToken]
+        public IActionResult EditNotes(Notes note)
         {
             try
             {
-                var note = _db.Notes.FirstOrDefault(x => x.Id == id);
-                if (note == null)
+                //Notes updatedNotes = _db.Notes.FirstOrDefault(x => x.Id == id);
+                //note.UserId = UserStatic.UserID;    
+                if (note == null) { return NotFound(); }
+
+                if (ModelState.IsValid)
                 {
-
-                    return NotFound();
+                    _db.Notes.Update(note);
+                    _db.SaveChanges();
+                    //return RedirectToAction("Index");
+                    //return NotFound();
                 }
+                return RedirectToAction("Index");
 
-                _db.Notes.Remove(note);
-                _db.SaveChanges();
-                return RedirectToAction("UserDashBoard", "Login");
+                //return View(note);      
+
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 

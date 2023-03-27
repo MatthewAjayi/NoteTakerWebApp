@@ -13,12 +13,12 @@ namespace NoteTakerWebApp.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        public IActionResult CreateNewNote()
+        public IActionResult Index()
         {
             return View();
         }
@@ -34,9 +34,15 @@ namespace NoteTakerWebApp.Controllers
                 _db.Notes.Add(note);
                 _db.SaveChanges();
                 TempData["sucess"] = "Note was created successfully!";
+                return RedirectToAction("Index", "ViewNotes");
             }
 
-            return View();
+            else
+            {
+                TempData["Fail"] = "Note was note created please try again!";
+                return View("Index");
+            }
+   
         }
         
     }

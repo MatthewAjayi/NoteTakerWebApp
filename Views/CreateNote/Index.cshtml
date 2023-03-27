@@ -29,7 +29,7 @@
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create New Note" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -38,7 +38,13 @@
 <div>
     <a asp-controller="ViewNotes" asp-action="Index">Back to List</a>
 </div>
+@if (TempData["Fail"] != null)
+{
+    <h2>@TempData["Fail"]</h2>
+}
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
