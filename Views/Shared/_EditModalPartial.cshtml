@@ -1,0 +1,46 @@
+﻿@model IEnumerable<NoteTakerWebApp.Models.Notes>
+
+@if (NotesStatic.Title != null){
+    Console.WriteLine(NotesStatic.Title);
+}
+
+<div class="modal fade" id="editNoteData" role="dialog">
+    <div class="modal-dialog err-pop" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Current Note</h2>
+                <a id="DivClose" class="btn-close" data-dismiss="modal" asp-controller="ViewNotes" asp-action="Index"></a>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <form id="editForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="" id="editId" value="editId" />
+                        <div class="form-group">
+                        <label asp-for=@NotesStatic.Title value=@NotesStatic.Title  class="control-label"></label>
+                        <input asp-for="@NotesStatic.Title" value="@NotesStatic.Title"  class=" form-control" />
+                        <span asp-validation-for="@NotesStatic.Title" class="text-danger"></span>
+                        </div>
+                   
+                    
+                    @*<div class="form-group">
+                    <label asp-for="@item.Description" class="control-label"></label>
+                    <textarea asp-for="@item.Description" class="form-control" cols="6" rows="6"></textarea>
+                    <span asp-validation-for="@item.Description" class="text-danger"></span>
+                    </div>*@
+                    @*                   <div class="form-group">
+                    <label asp-for="@Model.FirstOrDefault().UserId" class="control-label"></label>
+                    <input asp-for="@Model.FirstOrDefault().UserId" class="form-control" />
+                    <span asp-validation-for="@Model.FirstOrDefault().UserId" class="text-danger"></span>
+                    </div>*@
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <a id="updateNote" type="submit" value="Update" class="btn btn-primary" />
+                    <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="Index">Cancel</a>
+                    @*                    <a class="btn btn-primary" id="deleteData" asp-controller="ViewNotes">Delete</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -24,10 +24,10 @@ namespace NoteTakerWebApp.Controllers
             return View();
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
 
         //POST
         [HttpPost]
@@ -56,6 +56,7 @@ namespace NoteTakerWebApp.Controllers
                     else
                     {
                         TempData["Fail"] = "No users found in the db";
+                        return RedirectToAction("Index");
                         //return NotFound();
                     }
 
@@ -63,7 +64,7 @@ namespace NoteTakerWebApp.Controllers
 
             }
 
-            return View();
+            return View("Index");
         }
 
         public IActionResult UserDashBoard(int Id)

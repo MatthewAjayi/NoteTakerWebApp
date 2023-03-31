@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NoteTakerWebApp.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoteTakerWebApp.Controllers
 {
@@ -12,33 +13,11 @@ namespace NoteTakerWebApp.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Notes> notes = _db.Notes.ToList();
-            notes = _db.Notes.Where(userNotes => userNotes.UserId == UserStatic.UserID);
+            var notes = _db.Notes.Where(userNotes => userNotes.UserId == UserStatic.UserID).ToList();
+            //notes = _db.Notes.Where(userNotes => userNotes.UserId == UserStatic.UserID);
+            ViewBag.Notes = notes;
             return View(notes);
         }
-
-        //public IActionResult Delete(int?id)
-        //{
-        //    try
-        //    {
-
-        //        var note = _db.Notes.FirstOrDefault(x => x.Id == id);
-
-        //        if (note == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return PartialView("_DeletePartialView", note);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-
-        //}
 
         [HttpPost]
         public IActionResult Delete(int?id)
@@ -65,32 +44,27 @@ namespace NoteTakerWebApp.Controllers
 
         }
 
-        //public IActionResult EditNotes(int? id)
-        //{
-        //    try
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+        //POST
+        public ActionResult EditNotes(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
 
-        //        var note = _db.Notes.FirstOrDefault(x => x.Id == id);
+            var note = _db.Notes.Find(id);
+            //NotesStatic.Title = note.Name.ToString();
+            //NotesStatic.ID = note.Id;
+            //NotesStatic.Description = note.Description;
 
-        //        if (note == null)
-        //        {
-        //            return NotFound();
-        //        }
+            if (note == null)
+            {
+                return NotFound();
+            }
 
-        //        return RedirectToAction("EditNotes", note);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-
-        //}
+            //return PartialView("_EditModalPartial");
+            return View(note);
+        }
 
         //POST
         [HttpPost]
@@ -110,6 +84,9 @@ namespace NoteTakerWebApp.Controllers
                     //return RedirectToAction("Index");
                     //return NotFound();
                 }
+
+                //return PartialView("_EditModalPartial", note);
+
                 return RedirectToAction("Index");
 
                 //return View(note);      

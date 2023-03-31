@@ -5,39 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Login</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input type="text" id="Username" asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
+<div class="container ">
+    <div class="row">
+        <div id="left-side" class="col-sm-6 jumbotron text-center">
+            <h2 class="mt-5 pt-4">Welcome to the NoteTaker Web App! </h2>
+            <p>Lorem ipsum dolor sit amet,    consectetur adipisicing elit...</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            <a class="btn btn-primary" asp-action="CreateUser" asp-controller="Register">Register</a>
+        </div>
+        <div id="right-side" class="col-sm-6 jumbotron">
+            <form method="post" asp-action="Login">
+                <h2 class="mt-5 pt-4">Login</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input type="text" id="Username" width="10%" asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input type="password" asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group text-center">
+                    <input type="submit" value="Login" class="btn btn-primary" />
+                </div>
+            </form>
             <br />
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input type="password" asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+            @if (TempData["Fail"] != null)
+            {
+                <h4>@TempData["Fail"]</h4>
+            }
+        </div>
 </div>
-<br />
-@if (TempData["Fail"] != null)
-{
-    <h2>@TempData["Fail"]</h2>
-}
+
 
 @*<div>
     <a asp-action="Index">Back to List</a>
 </div>*@
+
+<style>
+        #left-side {
+            height: 50vh;
+            background-color: lightcyan;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        #right-side {
+            height: 50vh;
+            /*background-image: url(https://images.unsplash.com/photo-1587058571836-8562bb05e548?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80);*/
+            /*background-repeat: no-repeat;*/
+            border-radius: 0;
+            background-color: white;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: black;
+            border: none;
+            color: white;
+        }
+</style>
 
 @section Scripts {
     @{

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<NoteTakerWebApp.Models.Notes>
+@*@model NoteTakerWebApp.Models.Notes*@
 
 @{
     ViewData["Title"] = "ViewNotes";
@@ -9,6 +10,9 @@
 {
     <h2>@TempData["sucess"]</h2>
 }
+
+
+@*<partial name="_EditModalPartial" />*@
 
 <h1>View @UserStatic.UserName.ToString() Notes</h1>
 <hr />
@@ -33,58 +37,20 @@
     </div>
 </div>
 
-<div class="modal fade" id="editNoteData" role="dialog">
-    <div class="modal-dialog err-pop" style="">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Edit Current Note</h2>
-                <a id="DivClose" class="btn-close" data-dismiss="modal" asp-controller="ViewNotes" asp-action="Index"></a>
-            </div>
-            <div class="modal-body" style="text-align:center;">
-                <form id="editForm">
-@*                    <div asp-validation-summary="" class="text-danger"></div>
-*@                    <input type="hidden" asp-for="@Model.FirstOrDefault().Id" />
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.FirstOrDefault().Name, "Name:", htmlAttributes: new { @class = "control-label" })
-                        <input asp-for="@Model.FirstOrDefault().Name" class="form-control" />
-                        <span asp-validation-for="@Model.FirstOrDefault().Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.FirstOrDefault().Description" class="control-label"></label>
-                        <input asp-for="@Model.FirstOrDefault().Description" class="form-control" />
-                        <span asp-validation-for="@Model.FirstOrDefault().Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@Model.FirstOrDefault().UserId" class="control-label"></label>
-                        <input asp-for="@Model.FirstOrDefault().UserId" class="form-control" />
-                        <span asp-validation-for="@Model.FirstOrDefault().UserId" class="text-danger"></span>
-                    </div>
-                   
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div>
-                    <a id="updateNote" type="submit" value="Update" class="btn btn-primary" />
-                    <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="Index">Cancel</a>
-@*                    <a class="btn btn-primary" id="deleteData" asp-controller="ViewNotes">Delete</a>*@
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
     @foreach (var item in Model)
     {
         <div class="col-lg-4">
-            <div class="card" style="width:400px;margin:10px;">
+            <div class="card" style="width:400px;margin:10px; background-color: lightcyan;">
                 <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                    <p class="card-title">@Html.DisplayFor(modelItem => item.Description)</p>
-                    <a class="btn btn-primary" id="showMod" onclick="ConfirmEdit(@item.Id)">Edit</a>
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-title">@item.Description</p>
+                    <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="EditNotes" asp-route-id="@item.Id">Edit</a>
+                    @*<a class="btn btn-primary" id="showMod" onclick="ConfirmEdit(@item.Id)">Edit</a>*@
                     @*@Html.ActionLink("Delete","Delete", new { id=item.Id }, new { @class = "btn btn-primary", id="confirmDelete"+item.Id})*@
                     <a class="btn btn-primary" id="showModal" onclick="Confirm(@item.Id)">Delete</a>
-
 @*                    <a class="btn btn-primary" id="confirmDelete" data-toggle="modal" data-target="confirmDelete">Delete</a>
 *@                    @*<button type="button" name="btnLink" id="btnLink" class="btn btn-primary" asp-controller="ViewNotes" asp-action="Delete" asp-route-id="@item.Id">Open Pop</button>*@
                     @*@await Html.PartialAsync("_DeletePartialView", item)*@
@@ -95,32 +61,29 @@
     }
 
 </div>
-<input type="hidden" id="deleteId" />
-<input type="hidden" id="editId" />
+
 
 <script src="https://code.jquery.com/jquery-1.10.0.min.js"
         integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE="
         crossorigin="anonymous"></script>
-<script>
 
+
+<script>
+        
         var Confirm = function (id) {
 
             $("#deleteId").val(id);
             $("#confirmDelete").modal('show');
         }
 
-        var ConfirmEdit = function (id) {
-
-            $("#editId").val(id);
-            $("#editNoteData").modal('show');
-        }
 
         $("#create").click(function () {
             $('#confirmDelete').modal('show');
         })
-        $("#editNote").click(function () {
-            $('#editNoteData').modal('show');
-        })
+
+        //$("#editNote").click(function () {
+        //    $('#editNoteData').modal('show');
+        //})
 
         $("#deleteData").click(function ()
         {
@@ -132,6 +95,7 @@
                     url: '/ViewNotes/Delete',
                     data: { id: _id },
                     success: function(data){
+                        $("#confirmDelete").modal('hide');
                         setInterval('location.reload()', 7000);
                         //$("#wrapper").Html(data);
                         //$("body").html(result);
@@ -142,36 +106,10 @@
                    
                 })
 
-        })
-
-        $("#updateNote").click(function () {
-
-            var _id = $("#editId").val();
-            console.log("THIS IS THE ID = " + _id);
-            var editFormData = $("#editForm").serialize();
-            console.log("THIS IS THE FORM = " + editFormData);
-            
-            $.ajax({
-                type: "POST",
-                url: '/ViewNotes/EditNotes',
-                data:editFormData,
-                success: function (data) {
-                    $("#editNoteData").modal('hide');
-                    //$("#wrapper").Html(data);
-                    //$("body").html(result);
-                    ////$("#confirmDelete").modal('hide');
-                    //$("#deleteId").val(null);
-                    setInterval('location.reload()', 7000);
-                }
-
-            })
-
-        })
-
-        
+        })  
     
 </script>
 
-                        @section Scripts {
+ @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

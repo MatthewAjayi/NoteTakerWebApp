@@ -10,10 +10,12 @@
     <h2>@TempData["sucess"]</h2>
 }
 
-<h1>Create New Note</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+
+<div class="row center" style="background-color: lightcyan;">
+
+    <div class="col-md-4" >
+        <h1>Create New Note</h1>
+        <hr />
         <form asp-action="CreateNewNote">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -24,24 +26,38 @@
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" cols="6" rows="6"></textarea>
+                <textarea asp-for="Description" class="form-control" cols="6" rows="20"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Create New Note" class="btn btn-primary" />
+                <button class="btn btn-primary" type="submit">
+                    Create Note <i class="bi bi-file-earmark-plus"></i>
+                </button>
+
+                <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="Index">Back to List <i class="bi bi-list"></i></a>
+                
             </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-controller="ViewNotes" asp-action="Index">Back to List</a>
-</div>
+</div>*@
 @if (TempData["Fail"] != null)
 {
     <h2>@TempData["Fail"]</h2>
 }
+
+<style>
+    .center {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
 
 @section Scripts {
     @{

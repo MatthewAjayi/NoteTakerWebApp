@@ -10,40 +10,78 @@
     <h2>@TempData["sucess"]</h2>
 }
 
-<h2>Create User</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-action="CreateUser">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="RePassword" class="control-label">Re-enter Password</label>
-                <input asp-for="RePassword" class="form-control" />
-                <span asp-validation-for="RePassword" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-groupx">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<div class="container ">
+    <div class="row">
+        <div id="left-side" class="col-sm-6 jumbotron text-center">
+            <h2 class="mt-5 pt-4">Create a user and join the note taking community!</h2>
+            <img src="https://www.shutterstock.com/image-vector/notes-taking-vector-260nw-17244622.jpg" />
+            @*<a class="btn btn-primary" asp-action="CreateUser" asp-controller="Register">Register</a>*@
+        </div>
+        <div id="right-side" class="col-sm-6 jumbotron">
+            <h2 class="mt-5 pt-4">Get Started</h2>
+            <p style="color:dimgrey">Create your account now</p>
+            <hr />
+            <form method="post" asp-action="CreateUser">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="RePassword" class="control-label">Re-enter Password</label>
+                    <input asp-for="RePassword" class="form-control" />
+                    <span asp-validation-for="RePassword" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group text-center">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+                <div class="text-center">
+                    <span>Have an account?</span><a asp-action="Index" asp-controller="Login">Login</a>
+                </div>
+            </form>
+            <br />
+            @if (TempData["Fail"] != null)
+            {
+                <h4>@TempData["Fail"]</h4>
+            }
+        </div>
+    </div>
+
+
+<style>
+        #left-side {
+            height: 50vh;
+            background-color: lightcyan;
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        #right-side {
+            height: 50vh;
+            /*background-image: url(https://images.unsplash.com/photo-1587058571836-8562bb05e548?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1035&q=80);*/
+            /*background-repeat: no-repeat;*/
+            border-radius: 0;
+            background-color: white;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: black;
+            border: none;
+            color: white;
+        }
+</style>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
