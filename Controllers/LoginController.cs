@@ -49,7 +49,7 @@ namespace NoteTakerWebApp.Controllers
                         UserStatic.UserID = loginUser.Id;
                         TempData["UserID"] = loginUser.Id.ToString();
                         TempData["UserName"] = loginUser.Username.ToString();
-                        return RedirectToAction("UserDashBoard");
+                        return RedirectToAction("Index", "ViewNotes");
                     }
 
                     //MessageBox.Show("No values in db  with that username or password");

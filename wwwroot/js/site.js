@@ -8,12 +8,12 @@ var ConfirmEdit = function (id) {
     var _id = id;
     $("#editId").val(id);
     $.ajax({
+        type: "GET",
         url: '/ViewNotes/EditNotes',
         data: { id: _id },
-        //success: function (data) {
-        //    $("#editId").val(id);
-        //    $('#editNoteData').modal('show');
-        //},
+        success: function (data) {
+            $('#editNoteData').modal('show');
+        },
     });
     /*$("#editId").val(id);*/
     console.log("THE ID OF THE NOTE IS =" + id);

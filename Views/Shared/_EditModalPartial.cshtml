@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<NoteTakerWebApp.Models.Notes>
 
-@if (NotesStatic.Title != null){
-    Console.WriteLine(NotesStatic.Title);
+@if (ViewData["editNote"] != null)
+{
+    Console.WriteLine(ViewData["editNote"]);
 }
 
 <div class="modal fade" id="editNoteData" role="dialog">
@@ -16,8 +17,8 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="" id="editId" value="editId" />
                         <div class="form-group">
-                        <label asp-for=@NotesStatic.Title value=@NotesStatic.Title  class="control-label"></label>
-                        <input asp-for="@NotesStatic.Title" value="@NotesStatic.Title"  class=" form-control" />
+                        <label asp-for=@ViewData["editNote"] value=@ViewData["editNote"] class="control-label"></label>
+                        <input asp-for="@ViewData["editNote"]" value="@ViewData["editNote"]" class=" form-control" />
                         <span asp-validation-for="@NotesStatic.Title" class="text-danger"></span>
                         </div>
                    

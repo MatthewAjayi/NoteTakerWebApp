@@ -36,9 +36,21 @@
         </div>
     </div>
 </div>
-
-
-
+<form method="get" asp-controller="ViewNotes" asp-action="SearchNotes">
+    <p>
+        <input type="search" value="@ViewData["Getnotesdetails"]" name="searchTerm" placeholder="Search by title" />
+        <input type="submit" value="Search" class="btn btn-primary">
+    </p>
+</form>
+@*<div class="input-group">
+    <div class="form-outline">
+        <input type="search" id="form1" class="form-control" />
+        <label class="form-label" for="form1">Search</label>
+    </div>
+    <a class="btn btn-primary" asp-controller="ViewNotes" asp-action="SearchNotes" asp-route-id="@item.Id">
+        <i class="fas fa-search"></i>
+    </a>
+</div>*@
 <div class="row">
     @foreach (var item in Model)
     {

@@ -42,6 +42,9 @@ namespace NoteTakerWebApp.Controllers
                 _db.Users.Add(user);
                 _db.SaveChanges();
                 TempData["sucess"] = user.Username + " was created successfully!";
+                UserStatic.UserName = user.Username.ToString();
+                UserStatic.UserID = user.Id;
+                return RedirectToAction("Index", "ViewNotes");
                 //return RedirectToAction("Index");
                 //return RedirectToAction("Index", "Home");
             }

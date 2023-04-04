@@ -19,6 +19,31 @@ namespace NoteTakerWebApp.Controllers
             return View(notes);
         }
 
+        [HttpGet]
+        public IActionResult SearchNotes(string searchTerm)
+        {
+            
+            if (searchTerm == null)
+            {
+                //nothing
+                return RedirectToAction("Index");
+
+            }
+
+            var searchquery = _db.Notes.Where(userNotes => userNotes.Name == searchTerm).ToList();
+            if(searchquery != null)
+            {
+                ViewData["Getnotesdetails"] = searchTerm;
+                return View("Index", searchquery);
+            }
+
+            else
+            {
+                 return RedirectToAction("Index");
+            }
+            
+        }
+
         [HttpPost]
         public IActionResult Delete(int?id)
         {
